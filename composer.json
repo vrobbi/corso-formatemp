@@ -1,0 +1,17 @@
+{
+    "name": "lenovo/francesco",
+    "autoload": {
+        "psr-4": {
+            "Lenovo\\Testing\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Robbi",
+            "email": "vrobbi@libero.it"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.9"
+    }
+}
