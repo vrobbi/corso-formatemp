@@ -1,0 +1,44 @@
+
+service mysql status
+
+service mysql stop
+
+service mysql start
+
+connettersi al server mysql
+mysql  -h localhost  -u root -p
+
+per aiuto sui comandi mysql
+mysql  --help prompt
+
+indirizzo  phpmyadmin
+http://127.0.0.1/phpmyadmin/index.php
+
+per mostrare i database
+show databases;
+
+per info su tabella
+describe Libri;
+
+per aggiungere una colonna a una tabella
+ALTER TABLE Libri ADD NumeroPagine INT;
+
+
+per cancellare un campo
+ALTER TABLE Libri DROP NumeroPagine;
+
+
+per cambiare il tipo di dato su una colonna
+ALTER TABLE Libri CHANGE Titolo Titolo varchar(100);
+
+per creare la tabella Libri
+CREATE TABLE `Libri` ( `id` INT NOT NULL AUTO_INCREMENT, `Titolo` VARCHAR(45) NULL, `Autore` VARCHAR(45) NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+per inserire dati in una tabella
+INSERT INTO 'MyGuests' ('firstname','lastname','email') values('Antonio','Neri','antonio@gmail.com');
+
+per eliminare un database 
+DROP DATABASE Biblioteca;
+
+per creare la tabella persone
+CREATE TABLE `Persone` ( `id` INT NOT NULL AUTO_INCREMENT, `nome` VARCHAR(45) NULL, `cognome` VARCHAR(45) NULL, `dataDiNascita` DATE NULL, `sesso` ENUM('M','F') NULL, PRIMARY KEY (`id`))ENGINE = InnoDB;
