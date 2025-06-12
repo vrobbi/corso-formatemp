@@ -21,6 +21,17 @@
   /*  $ilnome =  $_POST['nome'];
     $ilcognome =  $_POST['cognome'];
     $mail =  $_POST['email'];   */
+
+    if (isset($_POST['delerow']) && is_numeric($_POST['delerow'])) {
+
+    $deleiduser = $_POST['delerow'];
+
+     $sql="DELETE FROM MyGuests WHERE id='". $deleiduser ."'";
+
+      $res = mysqli_query($link,$sql) or die ("cancellazione non eseguita");
+
+
+    }
    
 
    
@@ -53,21 +64,33 @@
    
     echo 'Query failed';
 }
+$chiudoform = "";
 if (mysqli_num_rows($result) > 0)  {
 //$riga1 = mysqli_fetch_assoc($result);
+ echo "<form action='db-gestione.php' method='POST' style='text-align:center;margin-top:50px;'>";
+
+ $chiudoform = "</form>";
+
 $contaitem = 0;
 ?>
-<span style='text-align:center;margin-top:50px;'>
+<span style='text-align:center;margin-top:50px;margin:0 auto'>
     <?php
 while ($riga1  = mysqli_fetch_assoc($result)) {
-$contaitem = $contaitem +1;
+   $radiobutton ="<input type='radio' name='delerow' value='".$riga1['id']. "' />";
+//$contaitem = $contaitem +1;
  
 
 
-echo "<h3> " . $contaitem . ") Il nome è " . $riga1['firstname']. ", cognome " .$riga1['lastname']." ,  e la mail è " .  $riga1['email']. "</h3>" ;
+echo $radiobutton ." Il nome è " . $riga1['firstname']. ", cognome " .$riga1['lastname']." ,  e la mail è " .  $riga1['email']. "<br />" ;
 }
 }
 ?>
+
+	        
+	         
+             <button type=submit style='font-size:11px'>Cancella la riga selezionata</button>
+
+		   </form>
  </span>   
    
 
