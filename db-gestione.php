@@ -3,7 +3,7 @@
 <title>Inserimento nel database</title>
 <meta http-equiv="Content-Type" content="text/css; charset='UTF-8'">
 <meta http-equiv="keywords" content="">
-<meta name="description" content="inserimento nel database">
+<meta name="description" content="lettura inserimento aggiornamento e cancellazione nel database">
 </head>
 <body>
 
@@ -17,6 +17,47 @@
     $pass = "formapass123";
     $dbname = "newformatemp";   
     $link = mysqli_connect($host, $user, $pass, $dbname);
+
+    if (isset($_POST['aggemail']) && is_numeric($_POST['aggid'])) {
+
+    $aggemail =  mysqli_real_escape_string($link,$_POST['aggemail']);
+    $aggnome =    mysqli_real_escape_string($link,$_POST['aggfirstname']);
+    $aggcognome =  mysqli_real_escape_string($link,$_POST['agglastname']);
+    $aggid= (int)$_POST['aggid'];
+
+    $sql = "UPDATE  MyGuests set firstname='" .$aggnome. "',lastname='". $aggcognome. "',email='".$aggemail. "' WHERE id =".$aggid;    
+    $res = mysqli_query($link,$sql) or die ("Aggiornamento non eseguito");
+
+    $aggiornato="L'aggiornamento è stato eseguito";
+    }
+
+
+
+     if (isset($_GET['aggiorna']) && is_numeric($_GET['aggiorna'])) {
+
+     $aggiornaiduser = (int)$_GET['aggiorna'];
+
+   //  $sql="SELECT * FROM MyGuests WHERE id='7'";
+
+     $sql="SELECT * FROM MyGuests WHERE id=".$aggiornaiduser;
+
+      $res = mysqli_query($link,$sql) or die ("SELECT non eseguita");
+
+       if(!$res){
+   
+    echo 'Query failed';
+}else {
+   $rigaupdate   = mysqli_fetch_assoc($res);
+   $formupdate = "<form method='POST'  action ='db-gestione.php?aggiorna=".$rigaupdate['id']."'  style='text-align:center;margin-top:50px;'>
+   Aggiorna il nome<input type ='text' value='".$rigaupdate['firstname']. "' name ='aggfirstname' /><br />
+   Aggiorna il cognome<input type ='text' value='".$rigaupdate['lastname']."' name ='agglastname' /><br />
+   Aggiorna la mail<input type ='text' name ='aggemail' value='".$rigaupdate['email']."' />
+   <input type ='hidden' value='".$rigaupdate['id']. "' name ='aggid' /><br />
+   <button type=submit style='font-size:11px'>Aggiorna i campi</button></form><br />".$aggiornato;
+ 
+}
+   
+      }
 
   /*  $ilnome =  $_POST['nome'];
     $ilcognome =  $_POST['cognome'];
@@ -76,7 +117,7 @@ $contaitem = 0;
 <span style='text-align:center;margin-top:50px;margin:0 auto'>
     <?php
 while ($riga1  = mysqli_fetch_assoc($result)) {
-   $radiobutton ="<input type='radio' name='delerow' value='".$riga1['id']. "' />";
+   $radiobutton ="<a href=db-gestione.php?aggiorna=" .$riga1['id'].">modifica la riga</a><input type='radio' name='delerow' value='".$riga1['id']. "' />";
 //$contaitem = $contaitem +1;
  
 
@@ -106,6 +147,12 @@ echo $radiobutton ." Il nome è " . $riga1['firstname']. ", cognome " .$riga1['l
              <button type=submit style='font-size:11px'>inserisci</button>
 
 		   </form>
+
+         <?php
+
+  echo  $formupdate;
+
+?>
         
         
         
